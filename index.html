@@ -1,0 +1,34 @@
+<meta charset="UTF-8" />
+
+<textarea id="input" style="width: 40em; height: 20em;"></textarea>
+<div id="output"></div>
+<br />
+<button id="button">convert</button>
+
+<script>
+    document.getElementById("input").value = `
+typedef struct {
+    uint8_t rlyFlag;
+    uint16_t B;
+    uint16_t A;
+} Dtype;
+`;
+</script>
+<script type="module">
+    import * as Cs from "./sper.js"
+    document.getElementById("button").onclick = () => {
+        document.getElementById("output").innerHTML = Cs.convert(
+            document.getElementById("input").value,
+        );
+    }
+</script>
+<style>
+    .children {
+        padding: 0.5em;
+    }
+    .parent {
+        border: 1px solid red;
+        padding: 0.5em;
+    }
+    .brother {}
+</style>
