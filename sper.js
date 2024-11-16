@@ -362,10 +362,10 @@ var nodeTraveler = (node) => {
         let defNode = nodeRecursiveGetNext(node, 1);
         let defName = nodeRecursiveGetNext(node, 2);
         defName.type = ENUM_NODE_TYPE.TYPE_DEF_NAME;
-        nodeArange([defNode, defName]);
-        defNode.parent = node;
-        node.children = defNode;
         node.next = defName.next;
+        node.children = defNode;
+        defNode.parent = node;
+        nodeArange([defNode, defName]);
     }
     /**
      *  @param {TypeNode} node
@@ -431,10 +431,7 @@ var nodeToHtml = (_node) => {
         return out;
     }
 
-    while (node) {
-        outHtml += walker(node);
-        node = node.next;
-    }
+    outHtml = walker(node);
     return outHtml;
 }
 
