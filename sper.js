@@ -405,7 +405,7 @@ var walkNodeRecursive = (node, doFcn) => {
 var nodeToHtml = (_node) => {
     let node = _node;
     let outHtml = "";
-    function getNodeNameHtml(node) {
+    function getNodeName(node) {
         return "@ " + node.id + " - " + getObjectKey(ENUM_NODE_TYPE, node.type) + " - " + node.name;
     }
     function wrapWithClass(cls, content) {
@@ -413,13 +413,14 @@ var nodeToHtml = (_node) => {
     }
     function walker(_node) {
         let node = _node;
-        let out = getNodeNameHtml(node);
+        let out = getNodeName(node);
         if (node.children) { // having children
             let content = "";
             content += walker(node.children);
-            content = wrapWithClass("parent", content);
-            out += content;
+            out += wrapWithClass("children", content);
         }
+
+        out = wrapWithClass("brother", out);
 
         node = _node;
         if (node.next == undefined) {
@@ -427,7 +428,7 @@ var nodeToHtml = (_node) => {
         }
 
         let content = walker(node.next);
-        out += wrapWithClass("brother", content);
+        out += content;
         return out;
     }
 
